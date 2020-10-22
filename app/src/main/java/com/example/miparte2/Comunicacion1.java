@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Comunicacion1 extends AppCompatActivity {
     EditText edtnombre;
@@ -19,11 +20,15 @@ public class Comunicacion1 extends AppCompatActivity {
         edtingresomes=findViewById(R.id.edtingresomes);
     }
     public void Verificar(View view){
+        if(edtnombre.getText().toString().length()!=0 && edtingresomes.getText().toString().length()!=0) {
         Intent intent = new Intent(this, Comunicacion2.class);
         intent.putExtra("nombre", edtnombre.getText().toString());
         intent.putExtra("ingresomes", Integer.parseInt(edtingresomes.getText().toString()));
         // startActivity(intent);
         startActivityForResult(intent, 1234);
+        }
+        else
+            Toast.makeText(this,"Debe Ingresar un nombre y un valor",Toast.LENGTH_SHORT).show();
     }
     @Override
     protected void onActivityResult(int requestCode,
@@ -37,5 +42,12 @@ public class Comunicacion1 extends AppCompatActivity {
             else
                 miresultado.setText("Esperemos que cambie de opinion para trabajar con nosotros");
         }
+        if (requestCode == 3500 && resultCode == RESULT_OK) {
+            miresultado.setText("Visitenos en alguna de nuestras sucursales");
+        }
+    }
+
+    public void sucursales(View view) {
+        startActivityForResult(new Intent(this, Comunicacion3.class), 3500);
     }
 }
